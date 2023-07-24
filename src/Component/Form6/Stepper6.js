@@ -88,9 +88,9 @@ function Stepper6({ nextStep, backStep,setForm,form }) {
       {loader && <Loader/>}
       <div className="search">
         <button className="back" onClick={handleBack}>
-          No
+          Back
         </button>
-        <button onClick={handleNext}>Yes</button>
+        <button onClick={handleNext}>Next</button>
       </div>
     </div>
   );
