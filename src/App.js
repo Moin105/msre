@@ -13,7 +13,8 @@ import Stepper6 from './Component/Form6/Stepper6';
 import Stepper7 from './Component/Form7/Stepper7';
 import MyComponent from './MyComponent';
 function App() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(7);
+  const [totalSteps, setTotalSteps] = useState(8);
   const [form,setForm]=useState({
     address:'',
     firstName: "",
@@ -42,11 +43,11 @@ function App() {
     propertyOwner: "",
   })
   const nextStep = () => {
-    setStep((prevStep) => Math.min(prevStep + 1, 8));
+    setStep((prevStep) => Math.min(prevStep + 1, totalSteps));
   };
   const backStep = () => {
     
-    setStep((prevStep) => Math.min(prevStep - 1, 8));
+    setStep((prevStep) => Math.min(prevStep - 1, totalSteps));
   };
   useEffect(() => {
    console.log("sasa",step)
@@ -113,7 +114,7 @@ function App() {
   step == 6 && <Stepper6 nextStep={nextStep} backStep={backStep} form={form} setForm = {setForm}/>
 }
 {
-  step == 7 && <Stepper7 nextStep={nextStep} backStep={backStep} form={form} setForm = {setForm}/>
+  step == 7 && <Stepper7 nextStep={nextStep} backStep={backStep} form={form} setForm = {setForm} setTotalSteps={setTotalSteps}/>
 }
 {
   step == 8 &&<div className='step3'>

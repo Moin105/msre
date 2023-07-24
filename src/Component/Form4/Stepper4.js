@@ -102,10 +102,10 @@ function Stepper4({ nextStep, backStep,setForm,form }) {
       <div className="select-arrows">
         <BsChevronDown/>
         </div>  <select
-        >   
+        
           name="propertyType"
           value={form.propertyType}
-          onChange={handleChange}
+          onChange={handleChange} >  
           <option value=""> Select a Property Type</option>
           <option value="Single Family Home Detached">
             Single Family Home Detached

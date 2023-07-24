@@ -1,11 +1,36 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "./Stepper7.css";
 import Loader from "../Loader/Loader";
 import { BsChevronDown } from "react-icons/bs";
 
 import axios from "axios";
-function Stepper7({ nextStep, backStep, form, setForm }) {
+function Stepper7({ nextStep, backStep, form, setForm,setTotalSteps }) {
+  const config = {
+    headers: {
+      "Access-Control-Allow-Origin": "*",
+      "Access-Control-Allow-Headers": "Content-Type",
+      "Content-Type": "application/json",
+      'Method': "POST"
+    },
+  };
   const [loader, setLoader] = useState(false);
+  const [confirmation,setConfirmation] = useState("")
+  useEffect(() => {
+    axios
+    .post(
+      "http://globaltechnologia.com/index.php?type=timeslots&month=2023-07",{},
+      config
+    )
+    .then((response) => {
+      // Handle success response
+      console.log("Form submitted successfully:", response);
+    })
+    .catch((error) => {
+      // Handle error response
+      console.error("Error submitting form:", error);
+    });
+  }, [])
+  
   // const [form, setForm] = useState({
   //   hasPool: "",
   //   currentlyListed: "",
@@ -13,21 +38,21 @@ function Stepper7({ nextStep, backStep, form, setForm }) {
   //   sellingInterest: "",
   //   propertyOwner: "",
   // });
-  const config = {
-    headers: {
-      "Access-Control-Allow-Origin": "*",
-      "Content-Type": "application/json",
-      Method: "POST",
-      "Access-Control-Allow-Headers": "Content-Type, Authorization",
-      CORS: "No-cors",
-      // Set the Content-Type header here
-    },
-  };
   const handleChange = (event) => {
     setForm({
       ...form,
       [event.target.name]: event.target.value,
     });
+  };
+  const handleChanges = (event) => {
+    setConfirmation({
+      [event.target.name]: event.target.value,
+    });
+    // if(event.target.value === "Yes"){
+    //   setShow(false)}
+    //   else{
+    //     setShow(true)
+    //   }
   };
   const handleBack = () => {
     setLoader(true);
@@ -76,7 +101,7 @@ function Stepper7({ nextStep, backStep, form, setForm }) {
         });
 
       let intervalId = setInterval(() => {
-        nextStep();
+        // nextStep();
         console.log("qwe");
       }, 2000);
       setTimeout(() => {
@@ -87,10 +112,16 @@ function Stepper7({ nextStep, backStep, form, setForm }) {
       alert("Please fill all fields");
     }
   };
+  const addAddition = ()=>{
+    // setTotalSteps(9)
+   
+  }
+   const  [show,setShow] = useState(true)
+ 
 
   return (
     <div className="step3">
-      <div className="input-field">
+   {!show  ?<>  <div className="input-field">
         <label>
           Does the property have a pool?<span className="importent">*</span>
         </label>
@@ -199,13 +230,33 @@ function Stepper7({ nextStep, backStep, form, setForm }) {
           </option>
           <option value="Other">Other</option>
         </select>
-      </div>
+      </div></>:<div className="input-field">
+        <label>
+          Would you like to hear from us?<span className="importent">*</span>
+        </label>
+           <div className="select-arrows">
+            <BsChevronDown />
+          </div> <select
+          name="confirmation"
+          value={confirmation}
+          onChange={handleChanges}
+        >
+          {" "}
+      
+          <option value="" selected="selected" class="gf_placeholder">
+            Select an Option
+          </option>
+          <option value="Yes">Yes</option>
+          <option value="No">No</option>
+         
+        </select>
+      </div>}
       {loader && <Loader />}
       <div className="search">
         <button className="back" onClick={handleBack}>
           Previous
         </button>
-        <button onClick={handleSubmit}>Submit</button>
+        {!show  ?<button onClick={handleSubmit}>Submit</button>:<button onClick={addAddition}>Hear from Us</button>}
       </div>
     </div>
   );
