@@ -71,13 +71,13 @@ function Stepper5({ nextStep, backStep,setForm,form }) {
       </div>
       <div className="input-field">
         <label>Foundation Type <span className="importent">*</span></label>
-        <select
+     <div className="select-arrows">
+        <BsChevronDown/>
+        </div>    <select
           name="foundationType"
           value={form.foundationType}
           onChange={handleChange}
-        >   <div className="select-arrows">
-        <BsChevronDown/>
-        </div>
+        >  
          <option value="" selected="selected" >
     Select a Foundation Type
   </option>
@@ -88,13 +88,13 @@ function Stepper5({ nextStep, backStep,setForm,form }) {
       </div>
     {form.foundationType == 'Basement' && <div className="input-field">
         <label>Finished Basement<span className="importent">*</span></label>
-        <select
+     <div className="select-arrows">
+        <BsChevronDown/>
+        </div>   <select
           name="finishedBasement"
           value={form.finishedBasement}
           onChange={handleChange}
-        >   <div className="select-arrows">
-        <BsChevronDown/>
-        </div>
+        >   
          <option value="" selected="selected" >
     Select an Option
   </option>

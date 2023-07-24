@@ -49,13 +49,13 @@ function Stepper6({ nextStep, backStep,setForm,form }) {
     <div className="step3">
       <div className="input-field">
         <label>Kitchen Countertops<span className="importent">*</span></label>
-        <select
+       <div className="select-arrows">
+        <BsChevronDown/>
+        </div>  <select
           name="kitchenCountertops"
           value={form.kitchenCountertops}
           onChange={handleChange}
-        >   <div className="select-arrows">
-        <BsChevronDown/>
-        </div>
+        >  
           <option value="" selected="selected">
             Select an Option
           </option>
@@ -68,13 +68,13 @@ function Stepper6({ nextStep, backStep,setForm,form }) {
       </div>
       <div className="input-field">
         <label>Kitchen Appliances<span className="importent">*</span></label>
-        <select
+      <div className="select-arrows">
+        <BsChevronDown/>
+        </div>   <select
           name="kitchenAppliances"
           value={form.kitchenAppliances}
           onChange={handleChange}
-        >   <div className="select-arrows">
-        <BsChevronDown/>
-        </div>
+        >  
        <option value="" selected="selected" >
     Select an Option
   </option>

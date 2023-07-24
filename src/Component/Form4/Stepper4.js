@@ -72,6 +72,7 @@ function Stepper4({ nextStep, backStep,setForm,form }) {
           onChange={handleChange}
           placeholder=""
           type="number"
+          min={0}
         />
       </div>
       <div className="input-field">
@@ -82,6 +83,7 @@ function Stepper4({ nextStep, backStep,setForm,form }) {
           onChange={handleChange}
           placeholder=""
           type="number"
+          min={0}
         />
       </div>
       <div className="input-field">
@@ -91,18 +93,19 @@ function Stepper4({ nextStep, backStep,setForm,form }) {
           value={form.squareFootage}
           onChange={handleChange}
           placeholder=""
+          min={500}
           type="number"
         />
       </div>
       <div className="input-field">
         <label>Property Type<span className="importent">*</span></label>
-        <select
+      <div className="select-arrows">
+        <BsChevronDown/>
+        </div>  <select
+        >   
           name="propertyType"
           value={form.propertyType}
           onChange={handleChange}
-        >   <div className="select-arrows">
-        <BsChevronDown/>
-        </div>
           <option value=""> Select a Property Type</option>
           <option value="Single Family Home Detached">
             Single Family Home Detached
@@ -117,10 +120,10 @@ function Stepper4({ nextStep, backStep,setForm,form }) {
         </select>
       </div>
       <div className="input-field">
-        <label>HOA Type<span className="importent">*</span></label>
-        <select name="hoaType" value={form.hoaType} onChange={handleChange}>   <div className="select-arrows">
+        <label>HOA Type<span className="importent">*</span></label><div className="select-arrows">
         <BsChevronDown/>
         </div>
+        <select name="hoaType" value={form.hoaType} onChange={handleChange}>   
         <option value="">Select an HOA Type</option>       
   <option value="">None</option>
   <option value="Mandatory">Mandatory</option>

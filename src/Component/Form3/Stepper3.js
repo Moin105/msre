@@ -24,7 +24,7 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
         },
         Online: {
           type: "Online",
-          Online: ["FACEBOOK", "INSTAGRAM", "NEXTDOOR"],
+          Online: ["Facebook", "Instagram", "Nextdoor"],
         },
         Radio: {
           type: "Radio",
@@ -40,7 +40,7 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
         },
         Billboards: {
           type: "Billboards",
-          billboards: ["BILLBOARD"],
+          Billboards: ["Billboard"],
         },
       },
     },
@@ -78,7 +78,7 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
         },
         Online: {
           type: "Online",
-          Online: ["FACEBOOK", "INSTAGRAM"],
+          Online: ["Facebook", "Instagram"],
         },
         Radio: {
           type: "Radio",
@@ -94,7 +94,7 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
         },
         Billboards: {
           type: "Billboards",
-          billboards: ["Billboard"],
+          Billboards: ["Billboard"],
         },
       },
     },
@@ -121,7 +121,7 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
         },
         Billboards: {
           type: "Billboards",
-          billboards: ["Billboard"],
+          Billboards: ["Billboard"],
         },
       },
     },
@@ -156,7 +156,7 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
         },
         Billboards: {
           type: "Billboards",
-          billboards: ["Billboard"],
+          Billboards: ["Billboard"],
         },
       },
     },
@@ -182,7 +182,7 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
         },
         Billboards: {
           type: "Billboards",
-          billboards: ["Billboard"],
+          Billboards: ["Billboard"],
         },
       },
     },
@@ -235,7 +235,7 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
         },
         Billboards: {
           type: "Billboards",
-          billboards: ["Billboard"],
+          Billboards: ["Billboard"],
         },
       },
     },
@@ -274,7 +274,7 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
         },
         Online: {
           type: "Online",
-          Online: ["Facebook", "Instagram", "NEXTDOOR"],
+          Online: ["Facebook", "Instagram", "Nextdoor"],
         },
         Radio: {
           type: "Radio",
@@ -291,7 +291,7 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
         },
         Billboards: {
           type: "Billboards",
-          billboards: ["Billboard"],
+          Billboards: ["Billboard"],
         },
       },
     },
@@ -330,22 +330,47 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
   // });
 
   const handleChange = (event) => {
+    
     setForm({
       ...form,
       [event.target.name]: event.target.value,
     });
   };
-  const selectedMarket = updatedData.find(item => item.name === form.market);
+  const handleChanges = (event) => {
+    if(event.target.name === "market"){
+      setForm({
+        ...form,
+        [event.target.name]: '',
+        anotherQuestion:"",
+        source:""
+      });
+      setForm({
+        ...form,
+        [event.target.name]: event.target.value,
+        anotherQuestion:"",
+        source:""
+      });
+    }
+    if(event.target.name === "source"){
+      setForm({
+        ...form,
+        [event.target.name]: event.target.value,
+        anotherQuestion:""
+      });}
+  };
+  const selectedMarket = updatedData?.find(item => item.name === form.market);
 
   let sourceOptionsKeys = [];
   if (selectedMarket) {
-    sourceOptionsKeys = Object.keys(selectedMarket.options);
+    sourceOptionsKeys = Object.keys(selectedMarket?.options);
   }
   
   let specificOptionsArray = [];
   if (selectedMarket && form.source) {
-    specificOptionsArray = selectedMarket.options[form.source][sourceOptionsKeys.includes(form.source) ? sourceOptionsKeys.find(key => key === form.source) : ''];
+    specificOptionsArray = selectedMarket?.options[form?.source][sourceOptionsKeys?.includes(form.source) ? sourceOptionsKeys?.find(key => key === form.source) : ['no data']];
   }
+  const optionsToRender = Array.isArray(specificOptionsArray) ? specificOptionsArray : [];
+
   const handleNext = () => {
     const {
       firstName,
@@ -437,10 +462,10 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
     
        <div className="input-field">
       <label>Market <span className="importent">*</span></label>
-      <select name="market" value={form.market} onChange={handleChange}>
         <div className="select-arrows">
         <BsChevronDown/>
         </div>
+      <select name="market" value={form.market} onChange={handleChange}>
         <option value="">Market</option>
         {updatedData.map((item, index) => (
           <option key={index} value={item.name}>
@@ -453,10 +478,10 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
     {form.market !== "" && (
       <div className="input-field">
         <label>How'd you hear about us? <span className="importent">*</span></label>
-        <select name="source" value={form.source} onChange={handleChange}>
         <div className="select-arrows">
         <BsChevronDown/>
         </div>
+        <select name="source" value={form.source} onChange={handleChange}>
           <option value="">How'd you hear about us?</option>
           {sourceOptionsKeys.map((option, index) => (
             <option key={index} value={option}>
@@ -470,16 +495,16 @@ function Stepper3({ nextStep, backStep,setForm,form }) {
     {form.source !== "" && (
       <div className="input-field">
         <label>How'd you hear about us? <span className="importent">*</span></label>
-        <select
+       <div className="select-arrows">
+        <BsChevronDown/>
+        </div>  <select
           name="anotherQuestion"
           value={form.anotherQuestion}
           onChange={handleChange}
         >
-             <div className="select-arrows">
-        <BsChevronDown/>
-        </div>
-          <option value="">Select...</option>
-          {specificOptionsArray.map((option, index) => (
+            
+          <option value="">How'd you hear about us?</option>
+          {optionsToRender.map((option, index) => (
             <option key={index} value={option}>
               {option}
             </option>
