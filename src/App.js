@@ -14,15 +14,73 @@ import Stepper7 from './Component/Form7/Stepper7';
 import MyComponent from './MyComponent';
 function App() {
   const [step, setStep] = useState(1);
+  const [form,setForm]=useState({
+    address:'',
+    firstName: "",
+    lastName: "",
+    email: "",
+    phone: "",
+    market: "",
+    source: "",
+    anotherQuestion: "",
+    bedrooms: "",
+    bathrooms: "",
+    squareFootage: "",
+    propertyType: "",
+    hoaType: "",
+    annualHoaFee: "",
+    hvacAge: "",
+    roofAge: "",
+    foundationType: "",
+    finishedBasement:"",
+    kitchenCountertops: "",
+    kitchenAppliances: "",
+    hasPool: "",
+    currentlyListed: "",
+    wasteHandled: "",
+    sellingInterest: "",
+    propertyOwner: "",
+  })
   const nextStep = () => {
     setStep((prevStep) => Math.min(prevStep + 1, 8));
   };
   const backStep = () => {
+    
     setStep((prevStep) => Math.min(prevStep - 1, 8));
   };
   useEffect(() => {
    console.log("sasa",step)
   }, [step])
+  const clearAll = ()=>{
+    setForm({
+      address:'',
+      firstName: "",
+      lastName: "",
+      email: "",
+      phone: "",
+      market: "",
+      source: "",
+      anotherQuestion: "",
+      bedrooms: "",
+      bathrooms: "",
+      squareFootage: "",
+      propertyType: "",
+      hoaType: "",
+      annualHoaFee: "",
+      hvacAge: "",
+      roofAge: "",
+      foundationType: "",
+      finishedBasement:"",
+      kitchenCountertops: "",
+      kitchenAppliances: "",
+      hasPool: "",
+      currentlyListed: "",
+      wasteHandled: "",
+      sellingInterest: "",
+      propertyOwner: "",
+    })
+    setStep(1);
+  }
   const [address,setAddress]=useState('')
   return (
     <div className='App'>
@@ -40,22 +98,22 @@ function App() {
 <ProgressBar currentStep={step} totalSteps={7}  />
 </div></> : null}
 { step == 1 &&
-<Stepper1 nextStep={nextStep} setAddress={setAddress} address={address}/>}
-{step == 2 && <Stepper2 nextStep={nextStep} backStep={backStep} setAddress={setAddress} address={address}/>}
+<Stepper1 nextStep={nextStep} setAddress={setAddress} address={address} form={form} setForm = {setForm}/>}
+{step == 2 && <Stepper2 nextStep={nextStep} backStep={backStep} setAddress={setAddress} address={address} form={form} setForm = {setForm}/>}
 {
-  step == 3 && <Stepper3 nextStep={nextStep} backStep={backStep}/>
+  step == 3 && <Stepper3 nextStep={nextStep} backStep={backStep} form={form} setForm = {setForm}/>
 }
 {
-  step == 4 && <Stepper4 nextStep={nextStep} backStep={backStep}/>
+  step == 4 && <Stepper4 nextStep={nextStep} backStep={backStep} form={form} setForm = {setForm}/>
 }
 {
-  step == 5 && <Stepper5 nextStep={nextStep} backStep={backStep}/>
+  step == 5 && <Stepper5 nextStep={nextStep} backStep={backStep} form={form} setForm = {setForm}/>
 }
 {
-  step == 6 && <Stepper6 nextStep={nextStep} backStep={backStep}/>
+  step == 6 && <Stepper6 nextStep={nextStep} backStep={backStep} form={form} setForm = {setForm}/>
 }
 {
-  step == 7 && <Stepper7 nextStep={nextStep} backStep={backStep}/>
+  step == 7 && <Stepper7 nextStep={nextStep} backStep={backStep} form={form} setForm = {setForm}/>
 }
 {
   step == 8 &&<div className='step3'>
@@ -66,6 +124,11 @@ function App() {
 </div>
   </div>
 }
+<div className='starter'>
+{step !== 1 && step !== 8 ? <span onClick={clearAll}>Start Over</span> : <p></p>}
+
+  <span style={{alignSelf:"flex-end"}}>Terms of Use</span>
+</div>
 </div>
 {/* <MyComponent/> */}
     </div>

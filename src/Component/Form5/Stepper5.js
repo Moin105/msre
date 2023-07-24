@@ -2,14 +2,25 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./Stepper5.css";
 import Loader from "../Loader/Loader";
+import {BsChevronDown} from 'react-icons/bs'
 
-function Stepper5({ nextStep, backStep }) {
-  const [form, setForm] = useState({
-    hvacAge: "",
-    roofAge: "",
-    foundationType: "",
-    finishedBasement:""
-  });
+function Stepper5({ nextStep, backStep,setForm,form }) {
+  // const [form, setForm] = useState({
+  //   hvacAge: "",
+  //   roofAge: "",
+  //   foundationType: "",
+  //   finishedBasement:""
+  // });
+  const handleBack = ()=>{
+    setLoader(true);
+    let intervalId = setInterval(() => {
+      backStep();
+    }, 2000);
+    setTimeout(() => {
+      setLoader(false);
+      clearInterval(intervalId);
+    }, 2000);
+  }
   const [loader,setLoader] = useState(false);
   const handleChange = (event) => {
     setForm({
@@ -39,7 +50,7 @@ function Stepper5({ nextStep, backStep }) {
   return (
     <div className="step3">
       <div className="input-field">
-        <label>Approximate age of HVAC Units</label>
+        <label>Approximate age of HVAC Units<span className="importent">*</span></label>
         <input
           name="hvacAge"
           value={form.hvacAge}
@@ -49,7 +60,7 @@ function Stepper5({ nextStep, backStep }) {
         />
       </div>
       <div className="input-field">
-        <label>About how old is the roof</label>
+        <label>About how old is the roof<span className="importent">*</span></label>
         <input
           name="roofAge"
           value={form.roofAge}
@@ -59,12 +70,14 @@ function Stepper5({ nextStep, backStep }) {
         />
       </div>
       <div className="input-field">
-        <label>Foundation Type</label>
+        <label>Foundation Type <span className="importent">*</span></label>
         <select
           name="foundationType"
           value={form.foundationType}
           onChange={handleChange}
-        >
+        >   <div className="select-arrows">
+        <BsChevronDown/>
+        </div>
          <option value="" selected="selected" >
     Select a Foundation Type
   </option>
@@ -74,12 +87,14 @@ function Stepper5({ nextStep, backStep }) {
         </select>
       </div>
     {form.foundationType == 'Basement' && <div className="input-field">
-        <label>Finished Basement</label>
+        <label>Finished Basement<span className="importent">*</span></label>
         <select
           name="finishedBasement"
           value={form.finishedBasement}
           onChange={handleChange}
-        >
+        >   <div className="select-arrows">
+        <BsChevronDown/>
+        </div>
          <option value="" selected="selected" >
     Select an Option
   </option>
@@ -89,7 +104,7 @@ function Stepper5({ nextStep, backStep }) {
       </div>}
       {loader && <Loader/>}
       <div className="search">
-        <button className="back" onClick={backStep}>
+        <button className="back" onClick={handleBack}>
           No
         </button>
         <button onClick={handleNext}>Yes</button>

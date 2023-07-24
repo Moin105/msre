@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./Stepper6.css";
+import {BsChevronDown} from 'react-icons/bs'
+
 import Loader from "../Loader/Loader";
-function Stepper6({ nextStep, backStep }) {
-  const [form, setForm] = useState({
-    kitchenCountertops: "",
-    kitchenAppliances: "",
-  });
+function Stepper6({ nextStep, backStep,setForm,form }) {
+  // const [form, setForm] = useState({
+  //   kitchenCountertops: "",
+  //   kitchenAppliances: "",
+  // });
 
   const handleChange = (event) => {
     setForm({
@@ -14,6 +16,16 @@ function Stepper6({ nextStep, backStep }) {
       [event.target.name]: event.target.value,
     });
   };
+  const handleBack = ()=>{
+    setLoader(true);
+    let intervalId = setInterval(() => {
+      backStep();
+    }, 2000);
+    setTimeout(() => {
+      setLoader(false);
+      clearInterval(intervalId);
+    }, 2000);
+  }
   const [loader,setLoader] = useState(false);
   const handleNext = () => {
     const { kitchenCountertops, kitchenAppliances } = form;
@@ -36,12 +48,14 @@ function Stepper6({ nextStep, backStep }) {
   return (
     <div className="step3">
       <div className="input-field">
-        <label>Kitchen Countertops</label>
+        <label>Kitchen Countertops<span className="importent">*</span></label>
         <select
           name="kitchenCountertops"
           value={form.kitchenCountertops}
           onChange={handleChange}
-        >
+        >   <div className="select-arrows">
+        <BsChevronDown/>
+        </div>
           <option value="" selected="selected">
             Select an Option
           </option>
@@ -53,12 +67,14 @@ function Stepper6({ nextStep, backStep }) {
         </select>
       </div>
       <div className="input-field">
-        <label>Kitchen Appliances</label>
+        <label>Kitchen Appliances<span className="importent">*</span></label>
         <select
           name="kitchenAppliances"
           value={form.kitchenAppliances}
           onChange={handleChange}
-        >
+        >   <div className="select-arrows">
+        <BsChevronDown/>
+        </div>
        <option value="" selected="selected" >
     Select an Option
   </option>
@@ -71,7 +87,7 @@ function Stepper6({ nextStep, backStep }) {
       </div>
       {loader && <Loader/>}
       <div className="search">
-        <button className="back" onClick={backStep}>
+        <button className="back" onClick={handleBack}>
           No
         </button>
         <button onClick={handleNext}>Yes</button>

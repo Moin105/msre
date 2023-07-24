@@ -1,8 +1,9 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./Stepper3.css";
+import {BsChevronDown} from 'react-icons/bs'
 import Loader from "../Loader/Loader";
-function Stepper3({ nextStep, backStep }) {
+function Stepper3({ nextStep, backStep,setForm,form }) {
   const [loader,setLoader] = useState(false);
   const updatedData = [
     {
@@ -318,15 +319,15 @@ function Stepper3({ nextStep, backStep }) {
   }
   
   ];
-  const [form, setForm] = useState({
-    firstName: "",
-    lastName: "",
-    email: "",
-    phone: "",
-    market: "",
-    source: "",
-    anotherQuestion: "",
-  });
+  // const [form, setForm] = useState({
+  //   firstName: "",
+  //   lastName: "",
+  //   email: "",
+  //   phone: "",
+  //   market: "",
+  //   source: "",
+  //   anotherQuestion: "",
+  // });
 
   const handleChange = (event) => {
     setForm({
@@ -377,11 +378,20 @@ function Stepper3({ nextStep, backStep }) {
     } else {
     }
   };
-
+  const handleBack = ()=>{
+    setLoader(true);
+    let intervalId = setInterval(() => {
+      backStep();
+    }, 2000);
+    setTimeout(() => {
+      setLoader(false);
+      clearInterval(intervalId);
+    }, 2000);
+  }
   return (
     <div className="step3">
       <div className="input-field">
-        <label>First Name</label>
+        <label>First Name <span className="importent">*</span></label>
         <input
           name="firstName"
           value={form.firstName}
@@ -393,7 +403,7 @@ function Stepper3({ nextStep, backStep }) {
         <p className="total">{form.firstName.length} of 40 max characters</p>
       </div>
       <div className="input-field">
-        <label>Last Name</label>
+        <label>Last Name <span className="importent">*</span></label>
         <input
           name="lastName"
           value={form.lastName}
@@ -405,7 +415,7 @@ function Stepper3({ nextStep, backStep }) {
         <p className="total">{form.lastName.length} of 40 max characters</p>
       </div>
       <div className="input-field">
-        <label>Email</label>
+        <label>Email <span className="importent">*</span></label>
         <input
           name="email"
           value={form.email}
@@ -415,7 +425,7 @@ function Stepper3({ nextStep, backStep }) {
         />
       </div>
       <div className="input-field">
-        <label>Phone</label>
+        <label>Phone <span className="importent">*</span></label>
         <input
           name="phone"
           value={form.phone}
@@ -426,8 +436,11 @@ function Stepper3({ nextStep, backStep }) {
       </div>
     
        <div className="input-field">
-      <label>Market</label>
+      <label>Market <span className="importent">*</span></label>
       <select name="market" value={form.market} onChange={handleChange}>
+        <div className="select-arrows">
+        <BsChevronDown/>
+        </div>
         <option value="">Market</option>
         {updatedData.map((item, index) => (
           <option key={index} value={item.name}>
@@ -439,8 +452,11 @@ function Stepper3({ nextStep, backStep }) {
 
     {form.market !== "" && (
       <div className="input-field">
-        <label>How'd you hear about us?</label>
+        <label>How'd you hear about us? <span className="importent">*</span></label>
         <select name="source" value={form.source} onChange={handleChange}>
+        <div className="select-arrows">
+        <BsChevronDown/>
+        </div>
           <option value="">How'd you hear about us?</option>
           {sourceOptionsKeys.map((option, index) => (
             <option key={index} value={option}>
@@ -453,12 +469,15 @@ function Stepper3({ nextStep, backStep }) {
 
     {form.source !== "" && (
       <div className="input-field">
-        <label>Specific Options</label>
+        <label>How'd you hear about us? <span className="importent">*</span></label>
         <select
           name="anotherQuestion"
           value={form.anotherQuestion}
           onChange={handleChange}
         >
+             <div className="select-arrows">
+        <BsChevronDown/>
+        </div>
           <option value="">Select...</option>
           {specificOptionsArray.map((option, index) => (
             <option key={index} value={option}>
@@ -471,7 +490,7 @@ function Stepper3({ nextStep, backStep }) {
       <div>
       {loader && <Loader/>}
         <div className="search">
-          <button className="back" onClick={backStep}>
+          <button className="back" onClick={handleBack}>
             No
           </button>
           <button onClick={handleNext}>Yes</button>

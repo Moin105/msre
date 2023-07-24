@@ -2,17 +2,27 @@ import React, { useState } from "react";
 import PropTypes from "prop-types";
 import "./Stepper4.css";
 import Loader from "../Loader/Loader";
+import {BsChevronDown} from 'react-icons/bs'
 
-function Stepper4({ nextStep, backStep }) {
-  const [form, setForm] = useState({
-    bedrooms: "",
-    bathrooms: "",
-    squareFootage: "",
-    propertyType: "",
-    hoaType: "",
-    annualHoaFee: "",
-  });
-
+function Stepper4({ nextStep, backStep,setForm,form }) {
+  // const [form, setForm] = useState({
+  //   bedrooms: "",
+  //   bathrooms: "",
+  //   squareFootage: "",
+  //   propertyType: "",
+  //   hoaType: "",
+  //   annualHoaFee: "",
+  // });
+  const handleBack = ()=>{
+    setLoader(true);
+    let intervalId = setInterval(() => {
+      backStep();
+    }, 2000);
+    setTimeout(() => {
+      setLoader(false);
+      clearInterval(intervalId);
+    }, 2000);
+  }
   const handleChange = (event) => {
     setForm({
       ...form,
@@ -55,7 +65,7 @@ function Stepper4({ nextStep, backStep }) {
   return (
     <div className="step3">
       <div className="input-field">
-        <label>How many bedrooms does your home have?</label>
+        <label>How many bedrooms does your home have?<span className="importent">*</span></label>
         <input
           name="bedrooms"
           value={form.bedrooms}
@@ -65,7 +75,7 @@ function Stepper4({ nextStep, backStep }) {
         />
       </div>
       <div className="input-field">
-        <label>How many bathrooms does your home have?</label>
+        <label>How many bathrooms does your home have?<span className="importent">*</span></label>
         <input
           name="bathrooms"
           value={form.bathrooms}
@@ -75,7 +85,7 @@ function Stepper4({ nextStep, backStep }) {
         />
       </div>
       <div className="input-field">
-        <label>Square footage of the property</label>
+        <label>Square footage of the property<span className="importent">*</span></label>
         <input
           name="squareFootage"
           value={form.squareFootage}
@@ -85,12 +95,14 @@ function Stepper4({ nextStep, backStep }) {
         />
       </div>
       <div className="input-field">
-        <label>Property Type</label>
+        <label>Property Type<span className="importent">*</span></label>
         <select
           name="propertyType"
           value={form.propertyType}
           onChange={handleChange}
-        >
+        >   <div className="select-arrows">
+        <BsChevronDown/>
+        </div>
           <option value=""> Select a Property Type</option>
           <option value="Single Family Home Detached">
             Single Family Home Detached
@@ -105,8 +117,10 @@ function Stepper4({ nextStep, backStep }) {
         </select>
       </div>
       <div className="input-field">
-        <label>HOA Type</label>
-        <select name="hoaType" value={form.hoaType} onChange={handleChange}>
+        <label>HOA Type<span className="importent">*</span></label>
+        <select name="hoaType" value={form.hoaType} onChange={handleChange}>   <div className="select-arrows">
+        <BsChevronDown/>
+        </div>
         <option value="">Select an HOA Type</option>       
   <option value="">None</option>
   <option value="Mandatory">Mandatory</option>
@@ -115,7 +129,7 @@ function Stepper4({ nextStep, backStep }) {
         </select>
       </div>
    {form.hoaType !== '' &&  <div className="input-field">
-        <label>Annual HOA Fee</label>
+        <label>Annual HOA Fee <span className="importent">*</span></label>
         <input 
           name="annualHoaFee"
           type="number"
@@ -125,7 +139,7 @@ function Stepper4({ nextStep, backStep }) {
       <div>
         {loader && <Loader/>}
         <div className="search">
-          <button className="back" onClick={backStep}>
+          <button className="back" onClick={handleBack}>
             No
           </button>
           <button onClick={handleNext}>Yes</button>
